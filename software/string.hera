@@ -1,0 +1,28 @@
+DLABEL(string)
+LP_STRING("Test string")
+
+// R2 is which terminal
+SET(R2, 0)
+//address in RAM for our string
+SET(R3, string)
+//R4 will hold the size in RAM
+//R5 will hold the char to print
+LOAD(R4,0,R3)  
+LABEL(loop_start)
+CMP(R4,R0)
+//NEED TO CHANGE THIS 
+BL(exit_loop)
+INC(R3, 1)
+//current char
+LOAD(R5,0,R3)
+// 1 - R2 -> switch to which screen to print
+NEG(R2,R2)
+INC(R2,1)
+//print to terminal
+print_reg(R2)
+print_reg(R5)
+// dec counter
+DEC(R4,1)
+BRR(loop_start)
+LABEL(exit_loop)
+HALT()
