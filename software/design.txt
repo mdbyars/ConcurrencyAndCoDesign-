@@ -1,0 +1,37 @@
+Part 1 
+The program first prints greetings to both terminals, with "hi" going to terminal 1 and something else 
+("hello", or a brief greeting in some other language) going to terminal 2. The H and the i should be placed
+in a register with SET (or SETLO); the characters from the second greeting should be extracted from a string
+defined with a DLABEL/LP_STRING definition in the data segment.
+
+
+Part 2 (Reading from keyboard 1)
+The program then reads characters from keyboard 1 and prints them immediately to screen 1, until it gets a
+newline or return.
+
+newline/return: Decimal -> 10 ; Hex -> 0x000a
+
+Part 3 (Computation)
+We can do some random computation
+
+Part 4 (Reading from keyboard 2)
+The program then reads characters from keyboard 2, without immediately showing them, until the input character
+is a newline or linefeed. After reading the newline/linefeed, it prints the entire line to screen 2, but with
+all lower-case letters converted to upper-case, and prints the original line, with all characters that aren't
+numerals or letters replaced by underscores, to screen 1.
+
+newline/return: Decimal -> 10 ; Hex -> 0x000a
+numerals : Decimal -> 48 - 57 ; Hex -> 0x0030 - 0x0039
+uppercase : Decimal -> 65 - 90 ; Hex -> 0x0041 - 0x005A
+lowercase : Decimal -> 97 - 122 ; Hex -> 0x0061 - 0x007A
+underscore character : Decimal -> 95 ; Hex -> 0x005f
+
+Part 5 (looping through both keyboards)
+The program then enters a loop in which it checks each keyboard to see if it has a character, 
+and if so, prints that character to both screens, but with all letters from keyboard 1 showing 
+up in upper-case on both terminals, and all letters from keyboard 2 showing up in lower-case on both terminals.
+
+For this, we can check keyboard 1 first then keyboard 2
+
+to make a char lower case, increase value by 32
+to make a char upper case, decrease value by 32
