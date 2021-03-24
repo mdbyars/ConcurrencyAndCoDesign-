@@ -1,0 +1,45 @@
+//printing the greetings of both keyboards
+
+DLABEL(kb2)
+LP_STRING("Hello")
+
+// which screen
+SET(R2,0) 
+
+// kb1 greeting 'Hi'
+SET(R3,'H')
+SET(R4,'i')
+
+print_reg(R2)
+print_reg(R3)
+print_reg(R2)
+print_reg(R4)
+
+// address of start kb2 greeting
+SET(R5,kb2)
+// length of kb2 greeting 
+LOAD(R6,0,R5)
+
+//R7 is cur char
+
+INC(R2,1)
+
+LABEL(kb2_greeting_start)
+CMP(R6,R0)
+//NEED TO CHANGE THIS 
+BULE(exit_kb2_greeting)
+INC(R5,1)
+//current char
+LOAD(R7,0,R5)
+//print to terminal
+print_reg(R2)
+print_reg(R7)
+// dec counter
+DEC(R6,1)
+BRR(kb2_greeting_start)
+LABEL(exit_kb2_greeting)
+HALT()
+
+
+
+

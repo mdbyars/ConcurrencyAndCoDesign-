@@ -1,0 +1,39 @@
+//printing keyboard 1 to screen 1
+
+DLABEL(kb1)
+LP_STRING("This is keyboard 1's long message that ends here\nRest of the message that should not be seen")
+
+//start address of kb1's message
+SET(R1,kb1)
+
+//which screen 
+SET(R2,0)
+
+//R3 holds length of kb2's message
+LOAD(R3,0,R1)
+
+//R4 holds cur char
+
+//new line 
+SET(R5, 10)
+
+LABEL(kb2_message_start)
+//get next char address
+INC(R1,1)
+//get next char
+LOAD(R4,0,R1)
+
+//Check if cur char is new line
+CMP(R4,R5)
+BZ(exit_kb2_message)
+//not newline, print
+print_reg(R2)
+print_reg(R4)
+BRR(kb2_message_start)
+
+LABEL(exit_kb2_message)
+HALT()
+
+
+
+

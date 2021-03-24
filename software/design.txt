@@ -4,15 +4,14 @@ The program first prints greetings to both terminals, with "hi" going to termina
 in a register with SET (or SETLO); the characters from the second greeting should be extracted from a string
 defined with a DLABEL/LP_STRING definition in the data segment.
 
+Part 2 (Computation)
+We can do some random computation
 
-Part 2 (Reading from keyboard 1)
+Part 3 (Reading from keyboard 1)
 The program then reads characters from keyboard 1 and prints them immediately to screen 1, until it gets a
 newline or return.
 
 newline/return: Decimal -> 10 ; Hex -> 0x000a
-
-Part 3 (Computation)
-We can do some random computation
 
 Part 4 (Reading from keyboard 2)
 The program then reads characters from keyboard 2, without immediately showing them, until the input character
@@ -35,3 +34,5 @@ For this, we can check keyboard 1 first then keyboard 2
 
 to make a char lower case, increase value by 32
 to make a char upper case, decrease value by 32
+
+

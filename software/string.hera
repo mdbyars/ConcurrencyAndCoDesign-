@@ -10,8 +10,7 @@ SET(R3, string)
 LOAD(R4,0,R3)  
 LABEL(loop_start)
 CMP(R4,R0)
-//NEED TO CHANGE THIS 
-BL(exit_loop)
+BZ(exit_loop)
 INC(R3, 1)
 //current char
 LOAD(R5,0,R3)

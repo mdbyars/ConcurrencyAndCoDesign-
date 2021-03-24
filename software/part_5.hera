@@ -1,0 +1,106 @@
+//printing from both keyboards to both screens
+//transform keyboard 1 output to all uppercase
+//transform keyboard 2 output to all lowercase
+
+DLABEL(kb1)
+LP_STRING("a")
+DLABEL(kb2)
+LP_STRING("zyxwvu")
+
+CBON()
+//start address of kb1's message
+SET(R1,kb1)
+//start address of kb2's message
+SET(R2,kb2)
+//which screen to print to
+SET(R3,0)
+//number of chars left in kb1's message
+LOAD(R4,0,R1)
+//number of chars left in kb2's message
+LOAD(R5,0,R2)
+//R6 holds char to print
+
+
+LABEL(print_char)
+//check if any have char
+ADD(R10,R4,R5)
+CMP(R10,R0)
+BZ(no_chars)
+
+//check if kb1 has a char
+CMP(R4,R0)
+BZ(kb1_no_chars)
+
+INC(R1,1)
+//get cur char from kb1
+LOAD(R6,0,R1)
+
+//lower bound for lower case letter
+SET(R8,97)
+//upper bound for lower case letter
+SET(R9,122)
+
+CMP(R6,R8)
+BL(not_lowercase)
+CMP(R6,R9)
+BUG(not_lowercase)
+
+//make uppercase
+DEC(R6,32)
+
+LABEL(not_lowercase)
+//uppercase or non-alphabetical
+
+//print to screen 0
+SET(R3,0)
+print_reg(R3)
+print_reg(R6)
+//print to screen 1
+SET(R3,1)
+print_reg(R3)
+print_reg(R6)
+
+//kb1 has 1 less char
+DEC(R4,1)
+LABEL(kb1_no_chars)
+
+//check if kb2 has a char
+CMP(R5,R0)
+BZ(kb2_no_chars)
+
+INC(R2,1)
+//get cur char from kb2
+LOAD(R6,0,R2)
+
+//lower bound for upper case letter
+SET(R8,65)
+//upper bound for upper case letter
+SET(R9,90)
+
+CMP(R6,R8)
+BL(not_uppercase)
+CMP(R6,R9)
+BUG(not_uppercase)
+
+//make lowercase
+INC(R6,32)
+
+LABEL(not_uppercase)
+//lowerrcase or non-alphabetical
+
+//print to screen 0
+SET(R3,0)
+print_reg(R3)
+print_reg(R6)
+//print to screen 1
+SET(R3,1)
+print_reg(R3)
+print_reg(R6)
+
+//kb2 has 1 less char
+DEC(R5,1)
+LABEL(kb2_no_chars)
+
+BRR(print_char)
+LABEL(no_chars)
+HALT()
