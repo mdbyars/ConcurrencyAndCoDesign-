@@ -1,0 +1,9 @@
+get_char
+0000 d b 0000
+d is the register to put the character in
+b is the register telling us which keyboard to read from
+
+put_char
+0000 d b 0000
+d is the register with the character to print to a screen
+b is the register telling us which screen to print to

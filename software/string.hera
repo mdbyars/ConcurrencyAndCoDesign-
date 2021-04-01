@@ -19,7 +19,7 @@ NEG(R2,R2)
 INC(R2,1)
 //print to terminal
 print_reg(R2)
-OPCODE(0x1152)
+OPCODE(0x0520)
 print_reg(R5)
 // dec counter
 DEC(R4,1)
