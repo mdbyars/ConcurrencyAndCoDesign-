@@ -4297,6 +4297,11 @@ e200 f200 e301 f3c0 4403 3068 b040 809
     <comp loc="(300,1650)" name="DEC">
       <a name="label" val="DEC"/>
     </comp>
+    <comp lib="0" loc="(130,900)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="16"/>
+      <a name="label" val="R_b"/>
+    </comp>
     <comp lib="0" loc="(370,1730)" name="Tunnel">
       <a name="label" val="DEC_carry_out"/>
     </comp>
@@ -4388,7 +4393,7 @@ e200 f200 e301 f3c0 4403 3068 b040 809
       <a name="label" val="1"/>
     </comp>
     <comp lib="2" loc="(170,900)" name="BitSelector">
-      <a name="width" val="4"/>
+      <a name="width" val="16"/>
     </comp>
     <comp lib="0" loc="(140,1840)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -4843,13 +4848,8 @@ e200 f200 e301 f3c0 4403 3068 b040 809
     </comp>
     <comp lib="0" loc="(160,920)" name="Constant">
       <a name="facing" val="north"/>
-      <a name="width" val="2"/>
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(130,900)" name="Tunnel">
-      <a name="facing" val="east"/>
       <a name="width" val="4"/>
-      <a name="label" val="0-3"/>
+      <a name="value" val="0x0"/>
     </comp>
     <comp lib="0" loc="(200,2920)" name="Constant">
       <a name="width" val="4"/>
