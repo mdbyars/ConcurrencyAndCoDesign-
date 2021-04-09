@@ -1,4 +1,4 @@
-//printing keyboard 2 with delay to screen 1 with uppercase to lower case 
+//printing keyboard 2 with delay to screen 1 with lower to upper case 
 //and to screen 2 with non-alphanumeric replaced with underscore
 //start of stored input
 DLABEL(kb1)
