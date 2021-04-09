@@ -14,6 +14,7 @@ SET(R1,1)
 OPCODE(0x1711)
 ADD(R10,R6,R7)
 
+
 CMP(R10,R0)
 //both keyboards no characters
 BZR(exit_printing)
@@ -21,8 +22,7 @@ BZR(exit_printing)
 //at least 1 keyboard has a real char 
 
 //Check is kb0 has char
-SET(R1,0)
-OPCODE(0x1610)
+
 CMP(R6,R0)
 BZR(kb0_no_char)
 
@@ -53,8 +53,6 @@ OPCODE(0x1620)
 LABEL(kb0_no_char)
 
 //check kb1
-SET(R1,1)
-OPCODE(0x1710)
 CMP(R7,R0)
 BZR(kb1_no_char)
 
@@ -78,7 +76,7 @@ LABEL(not_uppercase)
 SET(R2,0)
 OPCODE(0x1720)
 //print to screen 1
-SET(R7,1)
+SET(R2,1)
 OPCODE(0x1720)
 
 LABEL(kb1_no_char)
