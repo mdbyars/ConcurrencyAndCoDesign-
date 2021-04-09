@@ -2,6 +2,22 @@
 //transform keyboard 1 output to all uppercase
 //transform keyboard 2 output to all lowercase
 
+
+
+
+
+
+
+LABEL(Loop)
+//getchar from each keyboard
+OPCODE(0x1411)
+
+
+
+
+
+
+
 DLABEL(kb1)
 LP_STRING("a")
 DLABEL(kb2)
