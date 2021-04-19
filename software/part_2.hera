@@ -1,10 +1,11 @@
+SET(R2, 0)
+//size of this directly correlates with length of pause
+SET(R3, 60)
 LABEL(pause)
-SET(R1, 0)
-SET(R2, 1)
-SET(R3, 65535)
-ADD(R1, R1, R2)
-
-CMP(R1, R3)
-BL(pause)
-
+CMP(R3, R2)
+BLE(exit)
+INC(R2, 1)
+CMP(R3, R1)
+BRR(pause)
+LABEL(exit)
 HALT()

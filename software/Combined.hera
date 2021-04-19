@@ -1,36 +1,216 @@
-DLABEL(kb2)
-LP_STRING("Hello")
+//------------ PART 1 ------------
+DLABEL(kb1)
 
-// which screen
+//stores kb1 greeting in RAM
+DLABEL(greeting)
+LP_STRING("Hello")
+CBON()
+
+//which screen
 SET(R2,0) 
 
-// kb1 greeting 'Hi'
+// kb0 greeting 'Hi'
 SET(R3,'H')
 SET(R4,'i')
 
+//prints kb0 greeting
 OPCODE(0x1320)
 OPCODE(0x1420)
 
-// address of start kb2 greeting
-SET(R5,kb2)
-// length of kb2 greeting 
+// address of start kb1 greeting
+SET(R5,greeting)
+// length of kb1 greeting 
 LOAD(R6,0,R5)
 
-//R7 is cur char
-
+//switches to screen 1
 INC(R2,1)
 
 LABEL(kb2_greeting_start)
 CMP(R6,R0)
-//NEED TO CHANGE THIS 
 BULE(exit_kb2_greeting)
+
+//progresses through string stored in memory
 INC(R5,1)
+
 //current char
 LOAD(R7,0,R5)
+
 //print to terminal
 OPCODE(0x1720)
+
 // dec counter
 DEC(R6,1)
 BRR(kb2_greeting_start)
 LABEL(exit_kb2_greeting)
+
+//------------ PART 2 ------------
+
+SET(R2, 0)
+//size of this directly correlates with length of pause
+SET(R3, 60)
+LABEL(pause)
+CMP(R3, R2)
+BLE(exit)
+INC(R2, 1)
+CMP(R3, R1)
+BRR(pause)
+LABEL(exit)
+
+//------------ PART 3 ------------
+
+
+//which keyboard
+SET(R1, 0)
+
+//which screen
+SET(R2, 0)
+
+//new line value
+SET(R5, 10)
+
+LABEL(kb0_message_start)
+
+//getchar
+OPCODE(0x1411)
+
+//Check if curr char is new line and exits if it is
+CMP(R4,R5)
+BZ(exit_kb0_message)
+
+//not newline, print
+OPCODE(0x1420)
+BRR(kb0_message_start)
+
+LABEL(exit_kb0_message)
+
+//------------ PART 4 ------------
+
+//printing keyboard 1 with delay to screen 1 with lower to upper case 
+//and to screen 0 with non-alphanumeric replaced with underscore
+//start of stored input
+
+//which keyboard
+SET(R1,1)
+
+//which screen
+SET(R2, 1)
+
+//R4 holds current char
+
+//new line 
+SET(R5, 10)
+
+//address of start of kb1's message
+SET(R6, kb1)
+
+//address of start of kb1's message, use for incrementing
+SET(R7, kb1)
+
+
+//READING IN
+LABEL(finding_newline_in_kb1_message)
+//getchar
+OPCODE(0x1411)
+
+//check if curr char is a new line
+CMP(R4,R5)
+BZ(exit_finding_newline_in_kb1_message)
+
+//store curr char into ram
+STORE(R4,0,R7)
+INC(R7,1)
+BRR(finding_newline_in_kb1_message)
+
+
+//PRINTING
+LABEL(exit_finding_newline_in_kb1_message)
+
+ADD(R7, R0, R6)
+
+LABEL(print_to_screen)
+
+//printing to screen 1
+SET(R2, 1)
+
+LOAD(R4, 0, R7)
+CMP(R4, R0)
+BZ(finish_print)
+
+//lower bound for lower case letter
+SET(R8,97)
+//upper bound for lower case letter
+SET(R9,122)
+
+//check if lowercase
+CMP(R4,R8)
+BL(not_lowercase)
+CMP(R4,R9)
+BUG(not_lowercase)
+
+//lower case, so turn to upper case
+DEC(R4, 32)
+
+LABEL(not_lowercase)
+//print to screen 1
+OPCODE(0x1420)
+
+
+
+//printing to screen 0
+SET(R2, 0)
+
+//reload current char
+LOAD(R4, 0, R7)
+
+//turn non-numeral/non-alphabet to underscore
+
+//check if lowercase
+CMP(R4,R8)
+BL(NOT_LOWERCASE)
+CMP(R4,R9)
+BUG(NOT_LOWERCASE)
+
+BRR(uppercase_lowercase_numeric)
+
+LABEL(NOT_LOWERCASE)
+
+//lower bound for upper case letter
+SET(R8,65)
+//upper bound for upper case letter
+SET(R9,90)
+
+CMP(R4,R8)
+BL(NOT_UPPERCASE)
+CMP(R4,R9)
+BUG(NOT_UPPERCASE)
+
+BRR(uppercase_lowercase_numeric)
+
+LABEL(NOT_UPPERCASE)
+
+//lower bound for numeric
+SET(R8,48)
+//upper bound for numeric
+SET(R9,57)
+
+CMP(R4,R8)
+BL(NOT_NUMERIC)
+CMP(R4,R9)
+BUG(NOT_NUMERIC)
+
+BRR(uppercase_lowercase_numeric)
+
+//convert to underscore
+LABEL(NOT_NUMERIC)
+SET(R4, 95)
+
+LABEL(uppercase_lowercase_numeric)
+//print to screen 0
+OPCODE(0x1420)
+INC(R7,1)
+
+BRR(print_to_screen)
+
+LABEL(finish_print)
 HALT()
+

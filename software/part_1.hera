@@ -1,5 +1,6 @@
 //printing the greetings of both keyboards
 
+//stores kb2 greeting in RAM
 DLABEL(kb2)
 LP_STRING("Hello")
 
