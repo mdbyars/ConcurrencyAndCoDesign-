@@ -1,5 +1,3 @@
-//printing the greetings of both keyboards
-
 DLABEL(kb2)
 LP_STRING("Hello")
 
