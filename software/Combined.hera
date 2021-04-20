@@ -116,6 +116,9 @@ OPCODE(0x1411)
 CMP(R4,R5)
 BZ(exit_finding_newline_in_kb1_message)
 
+CMP(R4, R0)
+BZ(finding_newline_in_kb1_message)
+
 //store curr char into ram
 STORE(R4,0,R7)
 INC(R7,1)
@@ -212,5 +215,94 @@ INC(R7,1)
 BRR(print_to_screen)
 
 LABEL(finish_print)
+
+//------------ PART 5 ------------
+
+//printing from both keyboards to both screens
+//transform keyboard 0 output to all uppercase
+//transform keyboard 1 output to all lowercase
+
+//----------------------------------
+//R1 holds keyboard number
+//R2 holds screen number
+LABEL(printing)
+//get char from kb0
+SET(R1,0)
+OPCODE(0x1611)
+//get char from kb1
+SET(R1,1)
+OPCODE(0x1711)
+ADD(R10,R6,R7)
+
+
+CMP(R10,R0)
+//both keyboards no characters
+BZR(exit_printing)
+
+//at least 1 keyboard has a real char 
+
+//Check is kb0 has char
+
+CMP(R6,R0)
+BZR(kb0_no_char)
+
+//lower bound for lower case letter
+SET(R8,97)
+//upper bound for lower case letter
+SET(R9,122)
+
+CMP(R6,R8)
+BL(not_lowercase_5)
+CMP(R6,R9)
+BUG(not_lowercase_5)
+
+//make uppercase
+DEC(R6,32)
+
+LABEL(not_lowercase_5)
+//uppercase or non-alphabetical
+
+//print to screen 0
+SET(R2,0)
+OPCODE(0x1620)
+//print to screen 1
+SET(R2,1)
+OPCODE(0x1620)
+
+
+LABEL(kb0_no_char)
+
+//check kb1
+CMP(R7,R0)
+BZR(kb1_no_char)
+
+//lower bound for upper case letter
+SET(R8,65)
+//upper bound for upper case letter
+SET(R9,90)
+
+CMP(R7,R8)
+BL(not_uppercase_5)
+CMP(R7,R9)
+BUG(not_uppercase_5)
+
+//make lowercase
+INC(R7,32)
+
+LABEL(not_uppercase_5)
+//lowerrcase or non-alphabetical
+
+//print to screen 0
+SET(R2,0)
+OPCODE(0x1720)
+//print to screen 1
+SET(R2,1)
+OPCODE(0x1720)
+
+LABEL(kb1_no_char)
+
+BRR(printing)
+LABEL(exit_printing)
 HALT()
+
 

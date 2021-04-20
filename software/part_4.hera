@@ -22,7 +22,6 @@ SET(R7, kb1)
 
 
 
-
 //READING IN
 LABEL(finding_newline_in_kb1_message)
 //getchar
@@ -31,6 +30,9 @@ OPCODE(0x1411)
 //check if curr char is a new line
 CMP(R4,R5)
 BZ(exit_finding_newline_in_kb1_message)
+
+CMP(R4, R0)
+BZ(finding_newline_in_kb1_message)
 
 //store curr char into ram
 STORE(R4,0,R7)
