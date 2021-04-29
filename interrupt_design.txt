@@ -1,0 +1,29 @@
+1)  additional 1 bit flag to tell if processor is currently handling an interrupt
+    denote this flag as F_i. F_i = 0 by default
+2)  additional register to store incoming char
+    denote this register as R_char.
+
+top level
+1)  if F_i = 0, enable the keyboard and pop the current char to the processor
+    else disable keyboard from popping character
+
+processor level
+Check if valid char. If valid char:
+-------------this clock cycle-------------
+1)  save R0-R15, F0-F4, PC to back-up registers for next clock cycle
+2)  set F_i = 1 for next clock cycle
+3)  set R_char = incoming char for next clock cycle
+4)  branch to place in ROM to handle interrupt on next clock cycle 
+------------next clock cycle--------------
+process keyboard input. Then,
+1)  restore R0-15, F0-F4
+2)  set F_i = 0 for next clock cycle
+3)  set R_char = 0 for next clock cycle
+4)  use stored PC to branch back to original place in ROM
+
+
+Not sure if we need separate custom opcodes for backup, set interrupt state, store char
+
+
+
+
