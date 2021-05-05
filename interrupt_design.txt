@@ -25,5 +25,17 @@ process keyboard input. Then,
 Not sure if we need separate custom opcodes for backup, set interrupt state, store char
 
 
+Backing Up to RAM
+Before backing up, specify a register that should hold the branch address of the 
+interrupt code
+
+Specify/add a register to hold the contents of PC. Have the PC output be directly
+wired to this register
+
+1) Branch to location holding the code for the interrupt
+2) Save flags to a register (designate one)
+3) Store R0-R15 in RAM
+   
+
 
 
