@@ -1,0 +1,79 @@
+//CALL(0001, R3) to get the interruping character r3 may cause conflict check before turning in 
+//interrupt poll?
+//STORE(R4, 100, R10) need to store offset where to store? 
+//SET(R10, 5000)
+//STORE(R1, 0, R10)
+//SETLO(R2,12)
+//looping through to store all of the registers   
+STORE(R1, 0, R10)
+
+STORE(R2, 1, R10)
+
+STORE(R3, 2, R10)
+STORE(R4, 3, R10)
+STORE(R5, 4, R10)
+STORE(R6, 5, R10)
+STORE(R7, 6, R10)
+STORE(R8, 7, R10)
+STORE(R9, 8, R10)
+STORE(R10, 9, R10)
+STORE(R11, 10, R10)
+STORE(R12, 11, R10)
+STORE(R13, 12, R10)
+STORE(R14, 13, R10)
+STORE(R15, 14, R10)
+
+SAVEF(R4)
+
+STORE(R4, 15, R10)
+
+//stored flags too now entire state is backed up 
+//--------------------------------------
+
+//getchar and save it to r3
+OPCODE(0x1311)
+//put it in ram 
+
+//set r5 to be the code for new line 
+SET(R5, 10)
+//check if curr char is a new line
+CMP(R3,R5)
+
+//branch if char is not new line 
+
+BZR(nl)
+STORE(R3, 16, R10)
+
+
+LABEL(nl)
+//if its not new line, we will continue to get chars aka loop to the begininng of get char 
+
+//if the char is new line, escape loop and continue to here 
+
+//put char for all of the chars in ram we got 
+
+//----------------------------------------
+//we must load the character into the register from ram. what offset? and how many characters? 
+OPCODE(0x1310)
+
+//now implementing restore to all data 
+
+
+LOAD(R4, 15, R10)
+RSTRF(R4)
+LOAD(R1, 0, R10)
+LOAD(R2, 1, R10)
+LOAD(R3, 2, R10)
+LOAD(R4, 3, R10)
+LOAD(R5, 4, R10)
+LOAD(R6, 5, R10)
+LOAD(R7, 6, R10)
+LOAD(R8, 7, R10)
+LOAD(R9, 8, R10)
+LOAD(R10, 9, R10)
+LOAD(R11, 10, R10)
+LOAD(R12, 11, R10)
+LOAD(R13, 12, R10)
+LOAD(R14, 13, R10)
+LOAD(R15, 14, R10)
+
