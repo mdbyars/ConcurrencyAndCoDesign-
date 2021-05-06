@@ -54,6 +54,9 @@ LABEL(nl)
 
 //----------------------------------------
 //we must load the character into the register from ram. what offset? and how many characters? 
+LOAD(R7, 25, R10)
+INC(R7, 1)
+STORE(R7, 25, R10)
 OPCODE(0x1310)
 
 //now implementing restore to all data 
