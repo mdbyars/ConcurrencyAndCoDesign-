@@ -39,10 +39,13 @@ LABEL(INTERRUPT)
     STORE(R4, 15, R10)
 
     //stored flags too now entire state is backed up 
-    //--------------------------------------
+    //-----------------------------------------------------------------------------------
 
+    //which keyboard to get char from
+    SET(R3,1)
+    
     //getchar and save it to r3
-    OPCODE(0x1311)
+    OPCODE(0x1331)
     //put it in ram 
 
     //set r5 to be the code for new line 
@@ -53,7 +56,7 @@ LABEL(INTERRUPT)
     //branch if char is new line 
     BZR(nl)
 
-    //stores characters until new line
+    //NOT NEWLINE CHARACTER
 
     //gets string length and increments it
     //R7 holds current string length
@@ -70,30 +73,28 @@ LABEL(INTERRUPT)
     STORE(R3, 0, R9)
     BRR(RESTORE)
 
-
-
-    //OPCODE(0x1310)
-
-
+    //NEWLINE CHARACTER
     LABEL(nl)
     //if it is a new line, we will print the contents of the string stored in RAM
 
-    //----------------------------------------
     //Loading the lenth of the string and getting the address of the beginning of the string
     LOAD(R7, 25, R10)
     SET(R9, 0)
     ADD(R9, R0, R10)
     INC(R9, 26)
 
+    //which screen to print char to
+    SET(R2,1)
+
     LABEL(WHILE)
     LOAD(R3, 0, R9)
-    OPCODE(0x1310)
+    OPCODE(0x1320)
     INC(R9, 1)
     DEC(R7, 1)
     CMP(R7, R0)
     BGR(WHILE)
 
-
+    //------------------------------------------------------------------------------------------
     //now implementing restore to all data 
 
 
