@@ -5,6 +5,7 @@
 
 
 //constantly running process
+CBON()
 SET(R1, 0)
 LABEL(PROCESS)
 INC(R1, 1)
@@ -43,7 +44,7 @@ LABEL(INTERRUPT)
 
     //which keyboard to get char from
     SET(R3,1)
-    
+
     //getchar and save it to r3
     OPCODE(0x1331)
     //put it in ram 
