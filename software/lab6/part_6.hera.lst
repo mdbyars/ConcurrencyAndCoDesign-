@@ -1,0 +1,80 @@
+// .CODE:
+0/ 3160    	// FON
+1/ e100    	// SETLO_FOR_SET
+2/ f100    	// SETHI_FOR_SET
+3/ 3180    	// (matching labels: PROCESS) INC
+4/ ff    	// BRR
+5/ ea00    	// (matching labels: INTERRUPT) SETLO_FOR_SET
+6/ fac0    	// SETHI_FOR_SET
+7/ 610a    	// STORE
+8/ 621a    	// STORE
+9/ 632a    	// STORE
+a/ 643a    	// STORE
+b/ 654a    	// STORE
+c/ 665a    	// STORE
+d/ 676a    	// STORE
+e/ 687a    	// STORE
+f/ 698a    	// STORE
+10/ 6a9a    	// STORE
+11/ 6baa    	// STORE
+12/ 6cba    	// STORE
+13/ 6dca    	// STORE
+14/ 6eda    	// STORE
+15/ 6fea    	// STORE
+16/ 3470    	// SAVEF
+17/ 64fa    	// STORE
+18/ e201    	// SETLO_FOR_SET
+19/ f200    	// SETHI_FOR_SET
+1a/ 1321    	// OPCODE
+1b/ e50a    	// SETLO_FOR_SET
+1c/ f500    	// SETHI_FOR_SET
+1d/ 3068    	// FON
+1e/ b035    	// SUB
+1f/ 80b    	// BZR
+20/ 579a    	// LOAD
+21/ 3780    	// INC
+22/ 779a    	// STORE
+23/ e900    	// SETLO_FOR_SET
+24/ f900    	// SETHI_FOR_SET
+25/ a90a    	// ADD
+26/ 3998    	// INC
+27/ a979    	// ADD
+28/ 6309    	// STORE
+29/ 11    	// BRR
+2a/ 579a    	// (matching labels: nl) LOAD
+2b/ e900    	// SETLO_FOR_SET
+2c/ f900    	// SETHI_FOR_SET
+2d/ a90a    	// ADD
+2e/ 3999    	// INC
+2f/ e201    	// SETLO_FOR_SET
+30/ f200    	// SETHI_FOR_SET
+31/ 4309    	// (matching labels: WHILE) LOAD
+32/ 1320    	// OPCODE
+33/ 6009    	// STORE
+34/ 3980    	// INC
+35/ 37c0    	// DEC
+36/ 3068    	// FON
+37/ b070    	// SUB
+38/ 5f9    	// BGR
+39/ 709a    	// STORE
+3a/ 44fa    	// (matching labels: RESTORE) LOAD
+3b/ 3478    	// RSTRF
+3c/ 410a    	// LOAD
+3d/ 421a    	// LOAD
+3e/ 432a    	// LOAD
+3f/ 443a    	// LOAD
+40/ 454a    	// LOAD
+41/ 465a    	// LOAD
+42/ 476a    	// LOAD
+43/ 487a    	// LOAD
+44/ 498a    	// LOAD
+45/ 4a9a    	// LOAD
+46/ 4baa    	// LOAD
+47/ 4cba    	// LOAD
+48/ 4dca    	// LOAD
+49/ 4eda    	// LOAD
+4a/ 4fea    	// LOAD
+4b/ 21cd    	// RETURN
+// .DATA:
+c000/ c001
+

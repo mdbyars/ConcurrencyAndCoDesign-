@@ -96,8 +96,6 @@ LABEL(INTERRUPT)
     CMP(R7, R0)
     BGR(WHILE)
 
-    STORE(R0, 25, R10)
-
     //------------------------------------------------------------------------------------------
     //now implementing restore to all data 
 
