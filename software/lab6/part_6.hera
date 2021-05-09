@@ -43,10 +43,10 @@ LABEL(INTERRUPT)
     //-----------------------------------------------------------------------------------
 
     //which keyboard to get char from
-    SET(R3,1)
+    SET(R2,1)
 
     //getchar and save it to r3
-    OPCODE(0x1331)
+    OPCODE(0x1321)
     //put it in ram 
 
     //set r5 to be the code for new line 
