@@ -68,7 +68,7 @@ LABEL(INTERRUPT)
     //finds the correct RAM address at the end 
     //of the string being stored and stores the char
     SET(R9, 25)
-    //ADD(R9, R0, R0)
+    //ADD(R9, R0, R10)
     //INC(R9, 25)
     ADD(R9, R7, R9)
     STORE(R3, 0, R9)
@@ -81,7 +81,7 @@ LABEL(INTERRUPT)
     //Loading the lenth of the string and getting the address of the beginning of the string
     LOAD(R7, 25, R0)
     SET(R9, 26)
-    //ADD(R9, R0, R0)
+    //ADD(R9, R0, R10)
     //INC(R9, 26)
 
     //which screen to print char to
