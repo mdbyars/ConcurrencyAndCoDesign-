@@ -1,0 +1,60 @@
+1)  additional 1 bit flag to tell if processor is currently handling an interrupt
+    denote this flag as F_i. F_i = 0 by default
+2)  additional register to store incoming char
+    denote this register as R_char.
+3)  call interrupt handler function with hardware  
+4)  additional ROM to store sequence of opcodes for calling interrupt handler function
+5)  additional flag to tell processor to pause the main PC and call sequence of 
+    hardcoded op codes for calling interrupt handler function
+    denote this flasg as F_handle. F_callHandle = 0 by default
+6)  when R_char has a valid char and F_calledHandler = 0, pause main PC and call opcodes in 
+    the additional ROM 
+
+top level
+1)  if F_i = 0, enable the keyboard and pop the current char to the processor
+    else disable keyboard from popping character
+
+processor level
+Check if valid char from keyboard. If valid char:
+
+-------------this clock cycle----------------------------
+1)  set F_i = 1 for next clock cycle
+2)  store keyboard character in R_char
+
+-------------next clock cycle---------------------------
+1)  F_i = 1, so keyboard is disabled.
+2)  R_char has a valid char and F_calledHandler = 0, so main PC is paused and processor will 
+    call opcodes in the additional ROM for calling interrupt handler
+
+------------next few clock cycles------------------------
+... processor reaches last opcode in the additional ROM which is CALL(our_interrupt_handler)
+set F_calledHandler = 1 for next cycle
+
+-----------running interrupt handler--------------------
+Since F_calledHandler = 1 now, processor should resume main PC and use opcodes in main ROM
+
+... store registers and flags using R0 as starting RAM address
+1)  call get_char to get char from R_char and put char in some register
+2)  compare char to newline
+-------------if not newline------------
+1)  increase string length by 1
+2)  store char in RAM at R0 + 25 + string length
+------------if newline-----------------
+loop through characters in RAM
+1) load a char from RAM 
+2) print that char
+3) clear that char in RAM
+after loop
+1) clear old string length in RAM
+2) print newline
+
+... load back registers and flags using R0 as starting address
+interrupt handler returns and main PC will jump back to place in ROM for main process
+1)  clear R_char
+2)  set F_i = 0 for next cycle
+3)  F_calledHandler = 0 for next cycle
+
+   
+
+
+
