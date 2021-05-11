@@ -1,0 +1,30 @@
+//  let thread_chooser() be something in hardware that tells the processor what thread wants to 
+//  interrupt the main process (the OS) 
+//  Denote the thread as T_i
+
+CBON()
+
+LABEL(main_process_loop)
+... some main process stuff
+hardware is running thread_chooser() in the background
+//  if T_i is not 0 (or some other condition)
+//  1) main process is paused by hardware 
+//  2) hardware prepares to call interrupt handler with T_i as parameter
+//  3) hardware stops running thread_chooser()
+//  after T_i is done jump back here
+hardware resumes running thread_chooser()
+... some other main process stuff
+BRR(main_process_loop)
+
+LABEL(interrupt_handler)
+... store main process register and flag state in RAM with R0 as starting RAM address
+CALL(FP_alt, resume_thread)(T_i)
+... restore main process register and flag state from RAM with R0 as starting RAM address
+RETURN(FP_alt, PC_ret)
+
+LABEL(resume_thread)(T_i)
+... restore thread T_i register and flag state from RAM with 100*T_i as starting RAM address
+... run thread T_i
+... store thread T_i register and flag state to RAM with 100*T_i as starting RAM address
+RETURN(FP_alt, PC_ret)
+
