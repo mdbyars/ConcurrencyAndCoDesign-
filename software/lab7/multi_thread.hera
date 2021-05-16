@@ -1,0 +1,130 @@
+CBON()
+SET(R1,-1)
+SET(R2,0)
+LABEL(main_process_loop)
+INC(R1,2)
+ADD(R2,R1,R2)
+BRR(main_process_loop)
+
+LABEL(interrupt_handler)
+    STORE(R1, 0, R0)
+    STORE(R2, 1, R0)
+    STORE(R3, 2, R0)
+    STORE(R4, 3, R0)
+    STORE(R5, 4, R0)
+    STORE(R6, 5, R0)
+    STORE(R7, 6, R0)
+    STORE(R8, 7, R0)
+    STORE(R9, 8, R0)
+    STORE(R10, 9, R0)
+    STORE(R11, 10, R0)
+    STORE(R12, 11, R0)
+    STORE(R13, 12, R0)
+    STORE(R14, 13, R0)
+    STORE(R15, 14, R0)
+
+    //saving and storing flags
+    SAVEF(R4)
+    STORE(R4, 15, R0)
+
+//---------------------------------------------------------------------------------------
+
+    //getchar and save it to r3
+    OPCODE(0x1321)
+    CMP(R3,R0)
+    BZR(not_valid_char)
+
+    CALL(FP_alt, PC_ret)
+    BRR(finished_handling_interrupt)
+
+    LABEL(not_valid_char)
+    //interrupt was caused by thread needing to run
+    CALL(FP_alt, resume_thread)
+
+    LABEL(finished_handling_interrupt)
+
+//-------------------------------------------------------------------------------------
+
+    LOAD(R4, 15, R0)
+    RSTRF(R4)
+    LOAD(R1, 0, R0)
+    LOAD(R2, 1, R0)
+    LOAD(R3, 2, R0)
+    LOAD(R4, 3, R0)
+    LOAD(R5, 4, R0)
+    LOAD(R6, 5, R0)
+    LOAD(R7, 6, R0)
+    LOAD(R8, 7, R0)
+    LOAD(R9, 8, R0)
+    LOAD(R10, 9, R0)
+    LOAD(R11, 10, R0)
+    LOAD(R12, 11, R0)
+    LOAD(R13, 12, R0)
+    LOAD(R14, 13, R0)
+    LOAD(R15, 14, R0)
+RETURN(FP_alt, PC_ret)
+
+LABEL(resume_thread)
+//OPCODE(new opcode to get thread number)
+// restore thread T_i register and flag state from RAM with 100*T_i as starting RAM address
+// run thread T_i
+// store thread T_i register and flag state to RAM with 100*T_i as starting RAM address
+RETURN(FP_alt, PC_ret)
+
+LABEL(handle_character)
+    //which keyboard to get char from
+    SET(R2,1)
+
+    //getchar and save it to r3
+    OPCODE(0x1321)
+    //put it in ram 
+
+    //set r5 to be the code for new line 
+    SET(R5, 10)
+    //check if curr char is a new line
+    CMP(R3,R5)
+
+    //branch if char is new line 
+    BZR(nl)
+
+    //NOT NEWLINE CHARACTER
+
+    //gets string length and increments it
+    //R7 holds current string length
+    LOAD(R7, 25, R0)
+    INC(R7, 1)
+    STORE(R7, 25, R0)
+
+    //finds the correct RAM address at the end 
+    //of the string being stored and stores the char
+    SET(R9, 25)
+    //ADD(R9, R0, R10)
+    //INC(R9, 25)
+    ADD(R9, R7, R9)
+    STORE(R3, 0, R9)
+    BRR(RESTORE)
+
+    //NEWLINE CHARACTER
+    LABEL(nl)
+    //if it is a new line, we will print the contents of the string stored in RAM
+
+    //Loading the lenth of the string and getting the address of the beginning of the string
+    LOAD(R7, 25, R0)
+    SET(R9, 26)
+    //ADD(R9, R0, R10)
+    //INC(R9, 26)
+
+    //which screen to print char to
+    SET(R2,1)
+
+    LABEL(WHILE)
+    LOAD(R3, 0, R9)
+    OPCODE(0x1320)
+    STORE(R0, 0, R9) 
+    INC(R9, 1)
+    DEC(R7, 1)
+    CMP(R7, R0)
+    BGR(WHILE)
+    OPCODE(0x1520)
+    STORE(R0, 25, R0)
+RETURN(FP_alt, PC_ret)
