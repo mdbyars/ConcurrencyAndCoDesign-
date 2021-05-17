@@ -1,31 +1,38 @@
 CBON()
-SET(R1,-1)
-SET(R2,0)
+
+//set character length to 0
+SET(R10, 0xc001)
+STORE(R0, 25, R10)
+SET(R1,1)
 LABEL(main_process_loop)
-INC(R1,2)
-ADD(R2,R1,R2)
+INC(R1,1)
 BRR(main_process_loop)
 
 LABEL(interrupt_handler)
-    STORE(R1, 0, R0)
-    STORE(R2, 1, R0)
-    STORE(R3, 2, R0)
-    STORE(R4, 3, R0)
-    STORE(R5, 4, R0)
-    STORE(R6, 5, R0)
-    STORE(R7, 6, R0)
-    STORE(R8, 7, R0)
-    STORE(R9, 8, R0)
-    STORE(R10, 9, R0)
-    STORE(R11, 10, R0)
-    STORE(R12, 11, R0)
-    STORE(R13, 12, R0)
-    STORE(R14, 13, R0)
-    STORE(R15, 14, R0)
+    STORE(PC_ret, 0,FP) 
+    STORE(FP_alt, 1,FP)
+
+    SET(R10, 0xc001)
+
+    STORE(R1, 0, R10)
+    STORE(R2, 1, R10)
+    STORE(R3, 2, R10)
+    STORE(R4, 3, R10)
+    STORE(R5, 4, R10)
+    STORE(R6, 5, R10)
+    STORE(R7, 6, R10)
+    STORE(R8, 7, R10)
+    STORE(R9, 8, R10)
+    STORE(R10, 9, R10)
+    STORE(R11, 10, R10)
+    STORE(R12, 11, R10)
+    STORE(R13, 12, R10)
+    STORE(R14, 13, R10)
+    STORE(R15, 14, R10)
 
     //saving and storing flags
     SAVEF(R4)
-    STORE(R4, 15, R0)
+    STORE(R4, 15, R10)
 
 //---------------------------------------------------------------------------------------
 
@@ -34,7 +41,7 @@ LABEL(interrupt_handler)
     CMP(R3,R0)
     BZR(not_valid_char)
 
-    CALL(FP_alt, PC_ret)
+    CALL(FP_alt, handle_character)
     BRR(finished_handling_interrupt)
 
     LABEL(not_valid_char)
@@ -45,23 +52,28 @@ LABEL(interrupt_handler)
 
 //-------------------------------------------------------------------------------------
 
-    LOAD(R4, 15, R0)
+    SET(R10, 0xc001)
+
+    LOAD(R4, 15, R10)
     RSTRF(R4)
-    LOAD(R1, 0, R0)
-    LOAD(R2, 1, R0)
-    LOAD(R3, 2, R0)
-    LOAD(R4, 3, R0)
-    LOAD(R5, 4, R0)
-    LOAD(R6, 5, R0)
-    LOAD(R7, 6, R0)
-    LOAD(R8, 7, R0)
-    LOAD(R9, 8, R0)
-    LOAD(R10, 9, R0)
-    LOAD(R11, 10, R0)
-    LOAD(R12, 11, R0)
-    LOAD(R13, 12, R0)
-    LOAD(R14, 13, R0)
-    LOAD(R15, 14, R0)
+    LOAD(R1, 0, R10)
+    LOAD(R2, 1, R10)
+    LOAD(R3, 2, R10)
+    LOAD(R4, 3, R10)
+    LOAD(R5, 4, R10)
+    LOAD(R6, 5, R10)
+    LOAD(R7, 6, R10)
+    LOAD(R8, 7, R10)
+    LOAD(R9, 8, R10)
+    LOAD(R10, 9, R10)
+    LOAD(R11, 10, R10)
+    LOAD(R12, 11, R10)
+    LOAD(R13, 12, R10)
+    LOAD(R14, 13, R10)
+    LOAD(R15, 14, R10)
+
+    LOAD(PC_ret, 0,FP) 
+    LOAD(FP_alt, 1,FP)
 
     //new opcode to signal end of interrupt handler
     //need this to differentitate call and return because we now have 2 functions
@@ -69,13 +81,88 @@ LABEL(interrupt_handler)
 RETURN(FP_alt, PC_ret)
 
 LABEL(resume_thread)
-//OPCODE(new opcode to get thread number)
-// restore thread T_i register and flag state from RAM with 100*T_i as starting RAM address
-// run thread T_i
-// store thread T_i register and flag state to RAM with 100*T_i as starting RAM address
+
+    STORE(PC_ret, 2,FP) 
+    STORE(FP_alt, 3,FP)
+
+    // op code to get thread number from hardware and put in register
+    OPCODE(0x1112)
+    LSL8(R1,R1)
+    //R1 = T_i * 256
+
+    // restore thread T_i register and flag state from RAM with 256*T_i as starting RAM address
+    LOAD(R4, 15, R1)
+    RSTRF(R4)
+    LOAD(R2, 1, R1)
+    LOAD(R3, 2, R1)
+    LOAD(R4, 3, R1)
+    LOAD(R5, 4, R1)
+    LOAD(R6, 5, R1)
+    LOAD(R7, 6, R1)
+    LOAD(R8, 7, R1)
+    LOAD(R9, 8, R1)
+    LOAD(R10, 9, R1)
+    LOAD(R11, 10, R1)
+    LOAD(R12, 11, R1)
+    LOAD(R13, 12, R1)
+    LOAD(R14, 13, R1)
+    LOAD(R15, 14, R1)
+    LOAD(R1, 0, R1)
+
+    //---------------------------------------------------------------------------------------------------
+
+    // run thread T_i
+
+    // put thread number in R1-R10
+    //basic thread code to test
+    OPCODE(0x1112)
+    OPCODE(0x1212)
+    OPCODE(0x1312)
+    OPCODE(0x1412)
+    OPCODE(0x1512)
+    OPCODE(0x1612)
+    OPCODE(0x1712)
+    OPCODE(0x1812)
+    OPCODE(0x1912)
+    OPCODE(0x1a12)
+
+    //---------------------------------------------------------------------------------------------------
+
+
+    // op code to get thread number from hardware and put in register
+    //hopefully R10 has no important data
+    OPCODE(0x1a12)
+    LSL8(R10,R10)
+    //R10 = T_i * 256
+
+    // store thread T_i register and flag state to RAM with 256*T_i as starting RAM address
+    STORE(R1, 0, R10)
+    STORE(R2, 1, R10)
+    STORE(R3, 2, R10)
+    STORE(R4, 3, R10)
+    STORE(R5, 4, R10)
+    STORE(R6, 5, R10)
+    STORE(R7, 6, R10)
+    STORE(R8, 7, R10)
+    STORE(R9, 8, R10)
+    STORE(R10, 9, R10)
+    STORE(R11, 10, R10)
+    STORE(R12, 11, R10)
+    STORE(R13, 12, R10)
+    STORE(R14, 13, R10)
+    STORE(R15, 14, R10)
+
+    //saving and storing flags
+    SAVEF(R4)
+    STORE(R4, 15, R10)
+
+    LOAD(PC_ret, 2,FP) 
+    LOAD(FP_alt, 3,FP)
 RETURN(FP_alt, PC_ret)
 
 LABEL(handle_character)
+    SET(R10, 0xc001)
+
     //which keyboard to get char from
     SET(R2,1)
 
@@ -95,28 +182,27 @@ LABEL(handle_character)
 
     //gets string length and increments it
     //R7 holds current string length
-    LOAD(R7, 25, R0)
+    LOAD(R7, 25, R10)
     INC(R7, 1)
-    STORE(R7, 25, R0)
+    STORE(R7, 25, R10)
 
     //finds the correct RAM address at the end 
     //of the string being stored and stores the char
-    SET(R9, 25)
-    //ADD(R9, R0, R10)
-    //INC(R9, 25)
+
+    ADD(R9, R0, R10)
+    INC(R9, 25)
     ADD(R9, R7, R9)
     STORE(R3, 0, R9)
-    BRR(RESTORE)
+    BRR(finished_handling_character)
 
     //NEWLINE CHARACTER
     LABEL(nl)
     //if it is a new line, we will print the contents of the string stored in RAM
 
     //Loading the lenth of the string and getting the address of the beginning of the string
-    LOAD(R7, 25, R0)
-    SET(R9, 26)
-    //ADD(R9, R0, R10)
-    //INC(R9, 26)
+    LOAD(R7, 25, R10)
+    ADD(R9, R0, R10)
+    INC(R9, 26)
 
     //which screen to print char to
     SET(R2,1)
@@ -130,5 +216,6 @@ LABEL(handle_character)
     CMP(R7, R0)
     BGR(WHILE)
     OPCODE(0x1520)
-    STORE(R0, 25, R0)
+    STORE(R0, 25, R10)
+    LABEL(finished_handling_character)
 RETURN(FP_alt, PC_ret)

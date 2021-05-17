@@ -8,4 +8,8 @@ put_char
 d is the register with the character to print to a screen
 b is the register telling us which screen to print to
 
+get_thread_number
+0001 d 0001 0010
+d is the register to put the thread number in
+
 since b > 0, it won't be confused with branching
