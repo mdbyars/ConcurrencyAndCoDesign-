@@ -112,19 +112,40 @@ LABEL(resume_thread)
     //---------------------------------------------------------------------------------------------------
 
     // run thread T_i
+    INC(R1, 1)
+    ADD(R2, R1, R2)
 
-    // put thread number in R1-R10
-    //basic thread code to test
+    SET(R1, 84)
+    OPCODE(0x1110)
+
+    SET(R1, 104)
+    OPCODE(0x1110)
+
+    SET(R1, 114)
+    OPCODE(0x1110)
+
+    SET(R1, 101)
+    OPCODE(0x1110)
+
+    SET(R1,97)
+    OPCODE(0x1110)
+
+    SET(R1, 100)
+    OPCODE(0x1110)
+
     OPCODE(0x1112)
-    OPCODE(0x1212)
-    OPCODE(0x1312)
-    OPCODE(0x1412)
-    OPCODE(0x1512)
-    OPCODE(0x1612)
-    OPCODE(0x1712)
-    OPCODE(0x1812)
-    OPCODE(0x1912)
-    OPCODE(0x1a12)
+    INC(R1, 48)
+    OPCODE(0x1110)
+
+    INC(R5, 1)
+    OPCODE(0x1110)
+
+    SET(R1, 10)
+    OPCODE(0x1110)
+
+
+
+
 
     //---------------------------------------------------------------------------------------------------
 
