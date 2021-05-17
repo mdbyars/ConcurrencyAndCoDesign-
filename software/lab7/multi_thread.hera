@@ -111,37 +111,52 @@ LABEL(resume_thread)
 
     //---------------------------------------------------------------------------------------------------
 
+    SET(R6, 33)
+    ADD(R5, R5, R6)
+    
     // run thread T_i
-    INC(R1, 1)
-    ADD(R2, R1, R2)
+    SET(R2, 1)
 
     SET(R1, 84)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
     SET(R1, 104)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
     SET(R1, 114)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
     SET(R1, 101)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
     SET(R1,97)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
     SET(R1, 100)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
+
+    SET(R1, 32)
+    OPCODE(0x1120)
 
     OPCODE(0x1112)
     INC(R1, 48)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
+    SET(R1, 32)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+    OPCODE(0x1120)
+
+    OPCODE(0x1520)
     INC(R5, 1)
-    OPCODE(0x1110)
+    SUB(R5, R5, R6)
 
     SET(R1, 10)
-    OPCODE(0x1110)
+    OPCODE(0x1120)
 
 
 
